@@ -1,0 +1,13 @@
+Author: Otto-Harald Hirvonen
+Email: ottoharald.hirvonen@gmail.com
+Phone number: 040 41 32 757
+Description:
+		This is a reservation application demo. It stores reservations and
+		it's details (name, phone number, time, email, etc.) and gives them
+		in a readable list on the day the reservation is. It also calculates
+		the times that tables are free to be seated and reserved. It is also
+		stylized and only needs to be linked to a server to be used in a 
+		real restaurant. More javascript code can be found in python projects.
+		I have a game that uses backend with python and has a javascript/html 
+		frontend.
+			
