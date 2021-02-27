@@ -1,0 +1,633 @@
+var tableList = [];
+var storedData = localStorage.getItem("List of tables");
+var maxTableNumber = [];
+
+
+	function onLoadfunction(){
+
+		var tableList = [];
+
+
+	if(storedData == null) {
+
+	var div0 = document.createElement("div");
+	div0.id = "tableModal";
+	div0.className = "modal1";
+
+	document.getElementsByTagName("body")[0].appendChild(div0);
+
+	var div9 = document.createElement("div");
+	div9.id = "idOfModelContent";
+	div9.className = "modalContent";
+
+	div0.appendChild(div9);
+
+	var span0 = document.createElement("span");
+	span0.className = "span00";
+
+	div0.appendChild(span0); 
+
+	var paragraph10 = document.createElement("p");
+	paragraph10.id = "paragraph100";
+	span0.appendChild(paragraph10);
+
+	var t0 = document.createTextNode("Let's get started!");
+	paragraph10.appendChild(t0);
+
+	var paragraph11 = document.createElement("p");
+	paragraph11.id = "paragraph111";
+	span0.appendChild(paragraph11);
+
+	var t1 = document.createTextNode("How many tables are in your restaurant?");
+	paragraph11.appendChild(t1);
+
+	var input7 = document.createElement("input");
+	input7.id = "input700";
+	input7.type = "number";
+
+	span0.appendChild(input7);
+
+	var paragraph8 = document.createElement("p");
+	span0.appendChild(paragraph8);
+
+	var button76 = document.createElement("button");
+	button76.id = "button760";
+	paragraph8.appendChild(button76);
+
+	var button76Text = document.createTextNode("ADD");
+	button76.appendChild(button76Text);
+
+	var paragraph9 = document.createElement("p");
+	span0.appendChild(paragraph9);
+
+	var xSymbol1 = document.getElementById("xSymbol");
+	xSymbol1.style.display = "block";
+
+	span0.appendChild(xSymbol1);
+
+	xSymbol1.onclick = function(){
+
+		var removeOnLoadDiv = document.getElementById("tableModal");
+		removeOnLoadDiv.remove();
+		xSymbol1.style.display = "none";
+
+	};
+
+
+
+		button76.onclick = function(){
+
+			var numberOfTables = document.getElementById("input700").value;
+		
+
+		for(var i = 0; i < numberOfTables || i == numberOfTables; i++){
+
+			tableList.splice(i, 0, []);
+	}
+			console.log(tableList);
+			localStorage.setItem("List of tables", JSON.stringify(tableList));
+
+			var div5 = document.createElement("div");
+			div5.id = "tableModal";
+			div5.className = "modal1";
+
+			document.getElementsByTagName("body")[0].appendChild(div5);
+
+			var paragraph12 = document.createElement("p");
+			paragraph12.id = "paragraph122";
+			div5.appendChild(paragraph12);
+
+			document.getElementById("paragraph122").innerHTML = "what is the maximum amount";
+
+			var paragraph13 = document.createElement("p");
+			paragraph13.id = "paragraph133";
+			div5.appendChild(paragraph13);
+
+			document.getElementById("paragraph133").innerHTML = "of diners on each table?";
+
+			var div6 = document.createElement("div");
+			div6.id = "placeForInputs";
+
+			div5.appendChild(div6);
+
+			for(var x = 1; x <=  numberOfTables; x++){
+				var input86 = document.createElement("input");
+				input86.type = "number";
+				input86.placeholder = "table:" + x;
+				input86.className = "inputsOf86";
+				input86.id = "input86" + x;
+				div6.appendChild(input86);
+
+				var br = document.createElement("br");
+				input86.appendChild(br);
+
+				var br = document.createElement("br");
+				input86.appendChild(br);
+
+				var br = document.createElement("br");
+				input86.appendChild(br);
+			}
+
+			var button86 = document.createElement("button");
+			button86.id = "button860";
+
+			div6.appendChild(button86);
+
+			var t86 = document.createTextNode("confirm");
+			button86.appendChild(t86);
+
+			var removeOnLoadDiv = document.getElementById("tableModal");
+			removeOnLoadDiv.remove();
+
+			button86.onclick = function(){
+
+				maxTableNumber = [];
+
+				for(var x = 0; x <  numberOfTables; x++){
+					var y = x+1;
+					var inputKey = document.getElementById("input86" + y).value;
+					maxTableNumber.splice(x,0,inputKey);
+				}
+
+				localStorage.setItem("max amount of tables", JSON.stringify(maxTableNumber));
+				var removeOnLoadDiv = document.getElementById("tableModal");
+				removeOnLoadDiv.remove();
+				location.reload();
+			}
+
+	};
+
+
+	}
+
+	else{
+
+			
+			var tableList = localStorage.getItem("List of tables", tableList);
+
+			console.log(tableList);
+			
+	}
+}
+
+
+function createReservationWindow(){
+
+	var div1 = document.createElement("div");
+	div1.id = "reservationModal";
+	div1.className = "modal";
+
+	document.getElementsByTagName("body")[0].appendChild(div1);
+
+	var div2 = document.createElement("div");
+	div2.id = "idOfModelContent";
+	div2.className = "modalContent";
+
+	div1.appendChild(div2);
+
+	var span1 = document.createElement("span");
+	div2.appendChild(span1); 
+
+	var div3 = document.createElement("div");
+	div3.id = "division3";
+
+	span1.appendChild(div3);
+
+	var paragraph1 = document.createElement("p");
+	paragraph1.id = "para1";
+	var t = document.createTextNode("Let's make a reservation!");
+
+	paragraph1.appendChild(t);
+
+	div3.appendChild(paragraph1);
+
+	var input0 = document.createElement("input");
+	input0.id = "input00";
+	input0.type = "number";
+	input0.placeholder = "How many diners?";
+
+	div3.appendChild(input0);
+
+	var button0 = document.createElement("button");
+	button0.id = "button1";
+
+	var paragraph2 = document.createElement("p");
+	div3.appendChild(paragraph2);
+
+	var input1 = document.createElement("input");
+	input1.id = "input10";
+	input1.type = "time";
+
+	paragraph2.appendChild(input1);
+
+	var input9 = document.createElement("input");
+	input9.id = "input90";
+	input9.type = "time";
+
+	paragraph2.appendChild(input9);
+
+	var paragraph3 = document.createElement("p");
+	div3.appendChild(paragraph3);
+
+	var input2 = document.createElement("input");
+	input2.id = "input20";
+	input2.placeholder = "Firstname";
+
+	paragraph3.appendChild(input2);
+
+	var paragraph4 = document.createElement("p");
+	div3.appendChild(paragraph4);
+
+	var input3 = document.createElement("input");
+	input3.id = "input30";
+	input3.placeholder = "Lastname";
+
+	paragraph4.appendChild(input3);
+
+	var paragraph5 = document.createElement("p");
+	div3.appendChild(paragraph5);
+
+	var input5 = document.createElement("input");
+	input5.id = "input50";
+	input5.type = "number";
+	input5.placeholder = "Phonenumber";
+
+	paragraph5.appendChild(input5);
+
+	var paragraph6 = document.createElement("p");
+	div3.appendChild(paragraph6);
+
+	var input6 = document.createElement("input");
+	input6.id = "input60";
+	input6.type = "number";
+	input6.placeholder = "Tablenumber";
+
+	paragraph6.appendChild(input6);
+
+	var paragraph7 = document.createElement("p");
+	div3.appendChild(paragraph7);
+
+	var button0Text = document.createTextNode("Splice");
+	button0.appendChild(button0Text);
+
+	paragraph7.appendChild(button0);	
+
+	var div4 = document.createElement("div");
+	div4.id = "division4";
+
+	span1.appendChild(div4);
+
+	var input8 = document.createElement("input");
+	input8.id = "input80";
+	input8.type = "date";
+
+	div4.appendChild(input8);
+
+	var modal = document.getElementById("reservationModal");
+
+	var xSymbol1 = document.getElementById("xSymbol");
+	xSymbol1.style.display = "block";
+
+	span1.appendChild(xSymbol1);
+
+	modal.style.display = "block";
+
+	xSymbol1.onclick = function() {
+ 	modal.style.display = "none";
+
+};
+
+	button0.onclick = function() {
+
+		var storedData = localStorage.getItem("List of tables");
+
+		console.table(tableList);
+
+		if(storedData) {
+			tableList = JSON.parse(storedData);
+		}
+		
+		var i = document.getElementById("input60").value;
+		var dinerAmount = document.getElementById("input00").value;
+		var reservationTime = document.getElementById("input10").value;
+		var reservationTimeUntil = document.getElementById("input90").value;
+		var firstName = document.getElementById("input20").value;
+		var lastName = document.getElementById("input30").value;
+		var phoneNumber = document.getElementById("input50").value;
+		var reservationDate = document.getElementById("input80").value;
+		var newTable = [dinerAmount, firstName, lastName, phoneNumber, reservationDate + " " + reservationTime, reservationDate + " " + reservationTimeUntil ];
+
+			var momenttiReservationTime = moment(newTable[4]);
+			var	momenttiReservationTimeUntil = moment(newTable[5]);
+
+		if(momenttiReservationTimeUntil.diff(momenttiReservationTime, 'seconds') > 0){
+
+
+				if(tableList[i].length === 0){
+						tableList[i].splice(0, 0, newTable);
+						console.log(tableList);
+				}else { 
+					var anotherTime = moment(reservationDate + " " + reservationTime);
+					for(var v = 0; v < tableList[i].length; v++){
+						var specificTime = moment(tableList[i][v][4]);
+		
+							if(anotherTime > specificTime && tableList[i].length == v+1){
+									tableList[i].splice(v+1, 0, newTable);
+									break;
+								}
+							else if(anotherTime > specificTime){
+								continue;
+							}
+								else {
+									tableList[i].splice(v, 0, newTable);
+									//document.getElementById("secondDivision").innerHTML = tableList;
+									console.log(tableList);
+									break;
+									}
+							
+							}
+						
+					}
+			
+				
+
+				localStorage.setItem("List of tables", JSON.stringify(tableList));
+
+				console.log(localStorage.getItem("List of tables"));
+			
+
+		} else{
+				alert("Varauksen aika on suurempi kuin varauksenloppu");
+			};
+	}
+};
+
+
+
+
+
+function clearStorage(){
+
+	localStorage.removeItem("List of tables");
+
+	/*var timeNow = new Date();
+	var hourNow = timeNow.getHours();
+	var minuteNow = timeNow.getMinutes();
+
+	var currentTime = hourNow + ":" + minuteNow;
+	*/
+
+
+	var hourNumber = moment().hour(Number);
+	var minuteNumber = moment().minute(Number);
+	var secondNumber = moment().second(Number);
+	var midnight = moment().date(Number).hour(23).minute(59).second(59);
+
+	var timeNow = moment().dayOfYear(Number);
+
+	var something = moment().add(3, 'days').add(2, 'months').add(3, 'hours').add(4,'minutes');
+	var differencedate = moment().subtract(hourNumber, 'hours').subtract(minuteNumber, 'minutes').subtract(secondNumber, 'seconds');
+
+	//if(midnight.diff(timeNow, 'seconds') > ){}
+
+
+}
+
+//window.setInterval(
+
+	function getMyTableBitch() {
+
+
+	tableList = JSON.parse(storedData);
+	maxTableNumber = JSON.parse(localStorage.getItem("max amount of tables"));
+
+	console.log(tableList);
+
+	var currentTime = moment().date(Number);
+	var midnight = moment().date(Number).hour(23).minute(59).second(59);
+
+
+	for(x = 0; x < tableList.length; x++){
+		for(y = 0; y < tableList[x].length; y++){
+			var targetTime = moment(tableList[x][y][5]);
+
+			if(targetTime.diff(currentTime, 'seconds') < 0){
+				tableList[x].splice(y,1);
+				console.log(tableList);
+			} else{
+				continue;
+			}
+		}
+	}
+
+	
+	console.log(tableList);
+	var parhaimmatAjat = [];
+	var momenttiJaindeksi = [];
+	var availableAllDayArr = [];
+	for(var i = 1; i < tableList.length;i++){
+		if(tableList[i].length == 0){
+					availableAllDayArr.splice(availableAllDayArr.length, 0, i);
+				}
+			for(var j = 0; j < tableList[i].length; j++){
+
+				if(tableList[i][j] !== undefined){
+					var foundTime = moment(tableList[i][j][4]);
+					var foundTimeUntil = moment(tableList[i][j][5]);
+
+						if(foundTime.diff(currentTime, 'seconds') > 0){
+							var jokinAika = tableList[i][j][4];
+							var momenttiJokinAika = moment(tableList[i][j][4]).format('YYYY-MM-DD HH:mm');
+
+									if(parhaimmatAjat.length < 6){
+										parhaimmatAjat.splice(jokinAika.length, 0, foundTime);
+										momenttiJaindeksi.splice(jokinAika.length,0,[foundTime, i]);
+										break;
+									} else {
+
+
+											for(var k=0; k<parhaimmatAjat.length; k++){
+											
+												var newMomentti = moment(parhaimmatAjat[k]);
+
+												parhaimmatAjat.splice(k,1,newMomentti);
+
+
+
+											}
+
+											var smallestTime = moment.min(parhaimmatAjat);
+
+											if(foundTime.diff(smallestTime, 'seconds') > 0){
+												var indeksi = parhaimmatAjat.indexOf(smallestTime);
+												parhaimmatAjat.splice(indeksi,1,foundTime);
+												momenttiJaindeksi.splice(indeksi,1,[foundTime, i]);
+
+
+											}
+											break;
+
+									}
+							}					
+				}
+			}
+	}
+
+var numero = 1;
+var x = 0;
+var suurinAika = moment.max(parhaimmatAjat);
+
+	while(availableAllDayArr.length > 0){
+		var idSetterClass = "bestTime" + numero;
+		var idSetterPaxNumber = "bestTimePaxnumber" + numero;
+		var idSetter = "bestTimeTableNumber" + numero;
+		var idSetterHours = "bestTimeTime" + numero;
+
+		if(document.getElementById(idSetterClass) === null){
+		break;
+		} else{
+		document.getElementById(idSetterPaxNumber).innerHTML = maxTableNumber[x] + " pax";
+
+		document.getElementById(idSetter).innerHTML = availableAllDayArr[x];
+		document.getElementById(idSetterHours).innerHTML = "Allday";
+		document.getElementById(idSetterClass).style.display = "block";
+		availableAllDayArr.splice(x,1);
+		numero++;
+		var x = 0;
+		}
+	}
+		while(momenttiJaindeksi.length > 0){
+
+		var idSetterClass = "bestTime" + numero;
+		var idSetterPaxNumber = "bestTimePaxnumber" + numero;
+		var idSetter = "bestTimeTableNumber" + numero;
+		var idSetterHours = "bestTimeTime" + numero;
+		var idSetterHoursHours = "bestTimeHours" + numero;
+		var suurinAika = moment.max(parhaimmatAjat);
+		var ajanIndeksi = parhaimmatAjat.indexOf(suurinAika);
+		var wantedTime = momenttiJaindeksi[x][0];
+
+		if(document.getElementById(idSetterClass) === null){
+			break;
+		}else{
+
+			if(wantedTime = suurinAika){
+				document.getElementById(idSetter).innerHTML = momenttiJaindeksi[x][1];
+				momenttiJaindeksi.splice(x,1);
+				parhaimmatAjat.splice(ajanIndeksi,1);
+				numero++;
+				var x = 0;
+
+				document.getElementById(idSetterPaxNumber).innerHTML = maxTableNumber[x] + " pax";
+
+				var minutes = wantedTime.diff(currentTime, 'minutes');
+
+				var myMinutes = Math.floor(minutes / 60);
+				var remainderMinutes = minutes%60;
+				document.getElementById(idSetterHoursHours).innerHTML =  "hours";
+				document.getElementById(idSetterClass).style.display = "block";
+
+				if(remainderMinutes > 10){
+				document.getElementById(idSetterHours).innerHTML =  myMinutes + ":" + remainderMinutes;
+					}else if( remainderMinutes < 10){
+						document.getElementById(idSetterHours).innerHTML =  myMinutes + ":0" + remainderMinutes;
+					}
+
+
+			} else{
+				x++;
+			}		
+		}
+	}
+
+} //, 5000);
+
+function twoHourReservation(){
+	tableList = JSON.parse(storedData);
+
+	var timeSlab = document.getElementsByTagName("div");
+	var timeSlabCount = timeSlab.length;
+
+	for (var i = 3; i < 9; i++) {
+    	timeSlab[i].onclick = function(e) {
+	    	var wantedId = this.id;
+	    	var x = document.getElementsByTagName("p");
+
+	    	for(j = 1; j <= 6; j++){
+	    		var timeId = "bestTime" + j;
+	    		if(timeId === wantedId){
+	    			var k = j-1;
+	    			var targetNumber = i + 12 + (4*k)
+	    			var targetTableNumber = tableList[x[targetNumber].innerHTML];
+	    			var currentTime = moment().date(Number);
+
+	    			var twoHours = moment(currentTime).add(2,'h');
+
+	    			var newReservation = ["","","","",currentTime,twoHours];
+
+	    			if(targetTableNumber.length === 0){
+	    				targetTableNumber.splice(0,0,newReservation);
+	    				console.log(tableList);
+
+
+	    				localStorage.setItem("List of tables", JSON.stringify(tableList));
+						console.log(localStorage.getItem("List of tables"));
+							  location.reload(); 
+	    			}else{
+	    				for(var v = 0; v<targetTableNumber.length; v++){
+	    					var testTime = moment(targetTableNumber[v][4]);
+
+	    					if(currentTime.diff(testTime, 'seconds') < 0){
+	    						targetTableNumber.splice(v,0,newReservation);
+	    						console.log(tableList);
+
+			    				localStorage.setItem("List of tables", JSON.stringify(tableList));
+								console.log(localStorage.getItem("List of tables"));
+									  location.reload(); 
+	    						break;
+	    					}else{
+	    						continue;
+	    					}
+	    				}
+
+	    			}
+	    		}
+			}
+
+ 		}
+    }
+    			console.log(tableList);
+
+};
+
+
+function getReservations(){
+	tableList = JSON.parse(storedData);
+
+	var allReservations = [];
+	var allReservationsOrdered = [];
+	var k = 0;
+
+ for(var i = 0; i < tableList.length; i++){
+		for(var j = 0; j < tableList[i].length; j++){
+			var jElement = moment(tableList[i][j][4]);
+			allReservations.splice(0,0,jElement);
+		}
+	}
+
+	if(allReservations.length > 0){
+		var n = 0;
+		for(var k = allReservations.length; k > 0; k--){
+			var smallestOfreservations =  moment.min(allReservations);
+			var indexOfsmallestOfReservations = allReservations.indexOf(smallestOfreservations);
+			allReservationsOrdered.splice(n,0,smallestOfreservations);
+			allReservations.splice(indexOfsmallestOfReservations,1);
+			n++;
+		}
+	}
+
+	console.log(allReservations);
+	console.log(allReservationsOrdered);
+
+	
+};
