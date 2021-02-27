@@ -1,0 +1,183 @@
+import flask
+from flask import Flask
+from flask import render_template, request, jsonify, json
+from flask_socketio import SocketIO, send, emit, join_room, leave_room
+import os
+from classFile import Player
+
+app = Flask(__name__)
+app.config['SECRET_KEY'] = 'mysecret'
+socketio = SocketIO(app)
+
+ALL_PLAYERS = []
+GRID_COORDINATES = []
+player_number = 0
+grid_radius = 4
+
+
+@socketio.on('message')
+def handleMessage(msg):
+    print('Message: ' + msg)
+    send(msg, broadcast=True)
+
+
+@socketio.on('join')
+def on_join(data):
+    username = data['username']
+    room = data['room1']
+    join_room(room)
+    send(username + ' has entered the room.', room=room)
+
+
+@app.route('/')
+def index():
+    x = grid_radius
+    number_of_players = 2
+    player_starting_vectors = [
+                                [[[-x, x, 0], "O"], [[-x, (x-1), 1], "J"], [[-(x-1), (x-1), 0], "T"], [[-(x-1), x, -1], "A"]],
+                                [[[x, -x, 0], "G"], [[x, -(x-1), -1], "G"], [[(x-1), -(x-1), 0], "G"], [[(x-1), -x, 1], "G"]],
+
+                                [[[-x, 0, x], "O"], [[-(x-1), -1, x], "J"], [[-(x-1), 0, (x-1)], "T"], [[-x, 1,(x-1)], "A"]],
+                                [[[x, 0, -x], "G"], [[(x-1), 1, -x], "G"], [[(x-1), 0, -(x-1)], "G"], [[x, -1,-(x-1)], "G"]],
+
+                                [[[0, -x, x], "O"], [[1, -x, (x-1)], "J"], [[0, -(x-1), (x-1)], "T"], [[-1, -(x-1), x], "A"]],
+                                [[[0, x, -x], "G"], [[-1, x, -(x-1)], "G"], [[0, (x-1), -(x-1)], "G"], [[1, (x-1),-x], "G"]]
+                                ]
+    all_piece_types = ["O", "J", "T", "A", "G"]
+
+    for i in range(number_of_players):
+        new_player = Player(i, player_starting_vectors[i])
+        ALL_PLAYERS.append(new_player)
+
+    return render_template('index.html', name='index', player_starting_vectors=json.dumps(player_starting_vectors), all_piece_types=json.dumps(all_piece_types), grid_radius=json.dumps(grid_radius), GRID_COORDINATES=json.dumps(GRID_COORDINATES))
+
+@app.route('/make_move', methods = ['POST'])
+def make_move():
+    move = request.json
+    req_json = request.get_json()
+    vector_position = req_json['html_data'][0]
+    ending_vector = req_json['html_data'][2]
+    this_player_number = vector_position[0]
+    next_player_number = get_player_number(player_number)
+    this_player = ALL_PLAYERS[this_player_number]
+    next_player = ALL_PLAYERS[next_player_number]
+
+    all_possible_moves = this_player.calculate_all_possible_moves(GRID_COORDINATES, vector_position[1])
+    if this_player.move_can_be_made(all_possible_moves, ending_vector):
+        if next_player.is_a_piece_here(ending_vector):
+            next_player.capture_piece(ending_vector)
+        this_player.move_piece(vector_position[1], ending_vector)
+        return json.dumps({'Success ': True}), 200, {'ContentType': 'application/json'}
+    else:
+        return json.dumps({'Success ': False}), 200, {'ContentType':'application/json'}
+
+
+def get_player_number(player_number):
+    if player_number < 2:
+        new_player_number = player_number +1
+    else:
+        new_player_number = 0
+    return new_player_number
+
+
+def create_grid_vectors(grid_radius):
+    central_axis_coordinates = [[0, 0, 0]]
+    inverse_grid_coordinates = []
+    i = grid_radius
+    while i > 0:
+        central_vector = [0, (-1 * i), i]
+        inverse_central_vector =[0, i, (-1 * i)]
+        central_axis_coordinates.append(central_vector)
+        central_axis_coordinates.append(inverse_central_vector)
+        n = grid_radius - i
+        k = n
+        j = -1 * grid_radius
+        while j <= n:
+            vector = [i, j, k]
+            GRID_COORDINATES.append(vector)
+            inverse_i = -1 * i
+            inverse_j = -1 * j
+            inverse_k = -1 * k
+
+            if i == 0:
+                inverse_i = i
+            elif j == 0:
+                inverse_j = j
+            elif k == 0:
+                inverse_k = k
+
+            inverse_vector = [inverse_i, inverse_j, inverse_k]
+            inverse_grid_coordinates.append(inverse_vector)
+            k -= 1
+            j += 1
+        i -= 1
+    sorted_central_axis_coordinates = []
+    i = 1
+    while i < (len(central_axis_coordinates)-1):
+        if i % 2 != 0:
+            sorted_central_axis_coordinates.append(central_axis_coordinates[i])
+        i += 1
+    sorted_central_axis_coordinates.append(central_axis_coordinates[0])
+    j = len(central_axis_coordinates) -1
+    while j > 0:
+        if j % 2 == 0:
+            sorted_central_axis_coordinates.append(central_axis_coordinates[j])
+        j -= 1
+    for w in range(len(sorted_central_axis_coordinates)):
+        GRID_COORDINATES.append(sorted_central_axis_coordinates[w])
+
+    u = len(inverse_grid_coordinates) -1
+    while u >= 0:
+        GRID_COORDINATES.append(inverse_grid_coordinates[u])
+        u -= 1
+    return
+
+
+"""@app.route('/make_move', methods = ['POST'])
+def make_move():
+    move = request.json
+    print(move)
+    return jsonify("SUCCESS")"""
+"""def main():
+    game_end = False
+    number_of_players = 2
+    grid_radius = 4
+    x = grid_radius
+    grid_wing_span = grid_radius +1
+    players_turn = 1
+    turn_counter = 1
+
+    player_starting_vectors = [
+                                [[[-x, x, 0], "O"], [[-x, (x-1), 1], "J"], [[-(x-1), (x-1), 0], "T"], [[-(x-1), x, -1], "A"]],
+                                [[[x, -x, 0], "G"], [[x, -(x-1), -1], "G"], [[(x-1), -(x-1), 0], "G"], [[3, -x, 1], "G"]],
+
+                                [[[-x, 0, x], "O"], [[-(x-1), -1, x], "J"], [[-(x-1), 0, (x-1)], "T"], [[-x, 1,(x-1)], "A"]],
+                                [[[x, 0, -x], "G"], [[(x-1), 1, -x], "G"], [[(x-1), 0, -(x-1)], "G"], [[x, -1,-(x-1)], "G"]],
+
+                                [[[0, -x, x], "O"], [[1, -x, (x-1)], "J"], [[0, -(x-1), (x-1)], "T"], [[-1, -(x-1), x], "A"]],
+                                [[[0, x, -x], "G"], [[-1, x, -(x-1)], "G"], [[0, (x-1), -(x-1)], "G"], [[1, (x-1),-x], "G"]]
+                                ]
+    all_players = []
+    # TODO game setup
+    if number_of_players <= 1:
+        print("Error, not enough players")
+
+    for i in range(number_of_players):
+        new_player = PLayer(i, player_starting_vectors[(i-1)])
+        all_players.append(new_player)
+
+
+    #while not game_end:
+     #   # TODO turn basis
+      #  if players_turn >= number_of_players:
+       #     players_turn = 1
+
+
+
+
+        #players_turn += 1
+"""
+create_grid_vectors(grid_radius)
+
+if __name__ == '__main__':
+    socketio.run(app)
