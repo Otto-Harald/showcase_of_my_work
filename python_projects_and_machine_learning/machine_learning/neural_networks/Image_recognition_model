@@ -1,0 +1,60 @@
+# Title: Image recognition model
+# Author: Otto-Harald Hirvonen
+# email: ottoharald.hirvonen@gmail.com
+# phone number: 040 41 32 757
+# description:
+#               This is a neural network model, that uses keras dataset
+#               to train itself to recognise clothing items from pictures.
+#               This model can predict with 93% accuracy, and perhaps better
+#               with more tweaking of parameters. Some credit goes to an
+#               youtube channel called tech with tim. I used his
+#               recommendations.
+
+
+import tensorflow as tf
+from tensorflow import keras # API for tensorflow, helps minimize/simplify our code, does a lot of helpful hings
+import numpy as np
+import matplotlib.pyplot as plt
+
+data = keras.datasets.fashion_mnist # Keras comes with preset datasets, this is one of them
+
+# We need to split our data into testing and training data, because otherwise our code just
+# memorizes the data and no actual learning will happen. So with training data we train and
+# with testing data we test how accurate our model is
+
+(train_images, train_labels), (test_images, test_labels) = data.load_data()
+
+class_names = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat',
+               'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot']
+
+train_images = train_images/255.0
+test_images = test_images/255.0
+
+""" 
+print(train_images[7])
+plt.imshow(train_images[7], cmap=plt.cm.binary)
+plt.show()
+"""
+
+model = keras.Sequential([                      # This is our neural network model, sequential means sequental layers
+    keras.layers.Flatten(input_shape=(28, 28)), # This is the first layer that is flatten to one input array
+    keras.layers.Dense(128, activation="relu"), # This is our hidden layer, dense means that all neurons are connected to all others
+    keras.layers.Dense(10, activation="softmax")# This is our output layer, softmax converts output to probability distribution where output sums to 1
+])
+
+# The following line compiles the model into an object with training and interference features
+model.compile(optimizer="adam", loss="sparse_categorical_crossentropy", metrics=["accuracy"])
+model.fit(train_images, train_labels, epochs=5)
+
+# test_loss, test_acc = model.evaluate(test_images, test_labels)
+# print("Tested acc: ", test_acc)
+
+prediction = model.predict(test_images)
+for i in range(5):
+    plt.grid(False)
+    plt.imshow(test_images[i], cmap=plt.cm.binary)
+    plt.xlabel("Actual: " + class_names[test_labels[i]])
+    plt.title("Prediction: " + class_names[np.argmax(prediction[i])])
+    plt.show()
+
+
