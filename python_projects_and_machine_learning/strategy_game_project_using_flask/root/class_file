@@ -1,0 +1,56 @@
+class Player:
+    def __init__(self, player_number, coordinate_vectors):
+        self.player_number = player_number
+        self.vectors = coordinate_vectors
+
+    def calculate_all_possible_moves(self, grid_coordinates, position_of_vector):
+        all_possible_moves = []
+        all_piece_types = ["O", "J", "T", "A", "G"]
+        piece_movements = [1, 4, 3, 1, 2]
+        location_vector = self.vectors[position_of_vector][0]
+        piece = self.vectors[position_of_vector][1]
+        #print(grid_coordinates)
+        if piece == all_piece_types[0]:
+            number_of_moves = piece_movements[0]
+        elif piece == all_piece_types[1]:
+            number_of_moves = piece_movements[1]
+        elif piece == all_piece_types[2]:
+            number_of_moves = piece_movements[2]
+        elif piece == all_piece_types[3]:
+            number_of_moves = piece_movements[3]
+        else:
+            number_of_moves = piece_movements[4]
+        for i in range(len(grid_coordinates)):
+            if (abs(grid_coordinates[i][0] - location_vector[0]) <= number_of_moves) and (abs(grid_coordinates[i][1] - location_vector[1]) <= number_of_moves) and (abs(grid_coordinates[i][2] - location_vector[2]) <= number_of_moves):
+                all_possible_moves.append(grid_coordinates[i])
+        return all_possible_moves
+
+    def move_can_be_made(self, all_possible_moves, end_vector):
+        for i in range(len(all_possible_moves)):
+            if (all_possible_moves[i][0] == end_vector[0]) and (all_possible_moves[i][1] - end_vector[1]) and (all_possible_moves[i][2] - end_vector[2]):
+                return True
+        return False
+
+    def move_piece(self, current_position, new_position):
+        positional_vector = self.vectors[current_position]
+        starting_vector = self.vectors[current_position][0]
+        positional_vector.remove(starting_vector)
+        positional_vector.insert(0, new_position)
+        return
+
+    def capture_piece(self, current_position):
+        for i in range(len(self.vectors)):
+            if (self.vectors[i][0][0] == current_position[0]) and (self.vectors[i][0][1] == current_position[1]) and (self.vectors[i][0][2] == current_position[2]):
+                self.vectors.remove(self.vectors[i])
+                return
+        return
+
+    def is_a_piece_here(self, current_position):
+        for i in range(len(self.vectors)):
+            if (self.vectors[i][0][0] == current_position[0]) and (self.vectors[i][0][1] == current_position[1]) and (self.vectors[i][0][2] == current_position[2]):
+                return True
+        return False
+
+    def return_this_vector(self, position):
+        return self.vectors[position]
+
