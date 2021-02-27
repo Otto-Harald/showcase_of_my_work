@@ -1,0 +1,13 @@
+Title: Guerilla online strategy game
+Author: Otto-Harald Hirvonen
+email: ottoharald.hirvonen@gmail.com
+phone number: 040 41 32 757
+description:
+		This is a online strategy game, that I've created. It is similar to online chess.
+		Currently the project is under work. So far I have a basic demo that works
+		on locally hosted network that can send data to different clients. I will
+		be shortly releasing a developper vlog to better explain my current progress.
+		I use flask to communicate between python and javascript and socket io library
+		to communicate between clients and the server. Currently I'm trying to establish
+		a two way communication between clients and server. As of now it is still a one way
+		communication. 
