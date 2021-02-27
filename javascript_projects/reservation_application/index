@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<title>Prototype 2.0 </title>
+</head>
+<body id="body" onload="onLoadfunction(); getMyTableBitch(); twoHourReservation(); getReservations()">
+
+	<div id="topSide">
+
+		<p id="placeForDate">
+			<input type="date" id="date"></input>
+		</p>
+
+		<p id="placeForTime">
+			<input type="time" id="time"></input>
+		</p>
+
+		<p id="placeForUndo">
+			<svg id="undoSymbol" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2360.61 2073.1"><defs></defs><title>UndoSymbol3</title><path class="cls-1" d="M36.34,679.21C134.71,620.72,807.17,85.32,865.28,29.37A102.85,102.85,0,0,1,908.91,4.11C917.37,1.8,951.69-7.6,975.5,13.3c13.24,11.62,17.1,27.23,18.37,34.44V465.66l11.48,13.77h124c32.44.63,79.31,2.27,135.58,6.89,90.72,7.45,251.63,26.38,447.66,85,85.74,25.63,129.81,39,188.29,68.89,40.47,20.65,121.13,66,204.37,147,62.83,61.07,101.24,117.2,114.81,137.77,90.89,137.75,115.61,268.54,126.29,328.36,15.67,87.72,14.79,154.33,13.78,229.63-1.68,125.64-17.56,220-27.55,277.84a2004.78,2004.78,0,0,1-80.37,312.29,1290.66,1290.66,0,0,0,9.18-181.4c-2.16-109.07-4.65-234.49-66.59-376.58-75.72-173.7-196-270.76-222.73-291.63-93.54-73-183.25-104.83-250.29-128.59-94.24-33.39-169-44.9-250.29-57.4-94-14.46-167.77-18.4-296.22-25.26-74.35-4-136.12-5.88-179.1-6.89l6.89,411a80,80,0,0,1-13.78,29.85c-3.26,4.34-25.1,32.5-62,32.15-31.74-.31-51.67-21.48-55.11-25.26l-849.61-659c-2.7-5.82-6.73-14.56-11.48-25.26-15-33.68-5.6-12.48-9.59-22.29C-7.74,723.8,28.71,683.74,36.34,679.21Z" transform="translate(0 0)"/></svg>
+			<button id="undo"></button>
+		</p>
+
+		<p id="placeForSearch">
+			<svg id="searchSymbol" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2028.81 2019.7"><defs><style>.cls-2{fill:#fff;}</style></defs><title>SearchSymbol</title><circle class="cls-1" cx="838" cy="838" r="837.5"/><path class="cls-1" d="M1376.1,1479.77l213.62,217.4,220.7,222.31c43.44,33.35,67.24,57.89,81.13,74.65a66.68,66.68,0,0,0,21.1,17.85c27.75,14.48,58.37,2.92,61.66,1.62,30-11.82,42.08-38.13,45.44-45.43,3-6.53,10.45-23.29,8.11-45.44-3.42-32.38-25.18-52-30.83-56.8l-246.66-246.65L1492.9,1360.05"/><circle class="cls-2" cx="846.03" cy="846.03" r="676.65"/></svg>
+			<button id="search1"></button>
+		</p>
+
+		<p id="placeForReservationButton">
+			<button id="reservation" onclick="createReservationWindow()">Make a reservation</button>
+		</p>
+
+		<p>
+			<button id="thanos2x" onclick="clearStorage()">thanosx2</button>
+		</p>
+	</div>
+
+	<div id="rightSide">
+		<p id="rightTopTop">
+			<button id="reservation-view">Reservation View</button>
+			<button id="table-view">Table view</button>
+		</p>
+		<p id="rightTop">
+			<p id="placeForReservations">
+				<p id="reservationText" onclick="getReservations()">Reservations:</p>
+			</p>
+			
+		</p>
+
+		<p id="rightBottom">
+			
+		</p>
+		
+	</div>
+
+	<div id="leftSide">
+		<p id="leftTopTop">
+			<button id="availability-view">Availability View</button>
+			<button id="search2">Search</button>
+		</p>
+		<p id="leftTop">
+			<p id="whatsavailable">
+				<p id="whatsavailableText">here's what's available</p>
+			</p>
+		</p>
+
+		<p id="leftBottom">
+				<div id="bestTime1" class="bestAvailableTimes">
+					<p id="bestTimePaxnumber1" class="AvailableText"></p>
+					<p id="bestTimeTableNumber1" class="AvailableText"></p>
+					<p id="bestTimeTime1" class="AvailableText"></p>
+					<p id="bestTimeHours1" class="AvailableText"></p>	
+
+			</div>
+
+			<div id="bestTime2" class="bestAvailableTimes">
+				<p id="bestTimePaxnumber2" class="AvailableText"></p>
+				<p id="bestTimeTableNumber2" class="AvailableText"></p>
+				<p id="bestTimeTime2" class="AvailableText"></p>
+				<p id="bestTimeHours2" class="AvailableText"></p>
+			</div>
+
+			<div id="bestTime3" class="bestAvailableTimes">
+				<p id="bestTimePaxnumber3" class="AvailableText"></p>
+				<p id="bestTimeTableNumber3" class="AvailableText"></p>
+				<p id="bestTimeTime3" class="AvailableText"></p>
+				<p id="bestTimeHours3" class="AvailableText"></p>
+			</div>
+			<div id="bestTime4" class="bestAvailableTimes">
+				<p id="bestTimePaxnumber4" class="AvailableText"></p>
+				<p id="bestTimeTableNumber4" class="AvailableText"></p>
+				<p id="bestTimeTime4" class="AvailableText"></p>
+				<p id="bestTimeHours4" class="AvailableText"></p>
+			</div>
+			<div id="bestTime5" class="bestAvailableTimes">
+				<p id="bestTimePaxnumber5" class="AvailableText"></p>
+				<p id="bestTimeTableNumber5" class="AvailableText"></p>
+				<p id="bestTimeTime5" class="AvailableText"></p>
+				<p id="bestTimeHours5" class="AvailableText"></p>
+			</div>
+			<div id="bestTime6" class="bestAvailableTimes">
+				<p id="bestTimePaxnumber6" class="AvailableText"></p>
+				<p id="bestTimeTableNumber6" class="AvailableText"></p>
+				<p id="bestTimeTime6" class="AvailableText"></p>
+				<p id="bestTimeHours6" class="AvailableText"></p>
+			</div>
+		</p>
+		
+	</div>
+
+	<div id="placeForSpans"></div>
+	<div id="placeForBackground">
+		<canvas id="background"></canvas>
+	</div>
+	<div>
+	<svg id="xSymbol" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2178.79 2132.34"><defs></defs><title>xSymbol</title><rect class="cls-1" x="1525.53" y="-135.83" width="720.62" height="2431.65" rx="116.67" transform="translate(-984.54 1635.99) rotate(-45)"/><rect class="cls-1" x="1479.08" y="-135.83" width="720.62" height="2431.65" rx="116.67" transform="translate(1603.14 3130.49) rotate(-135)"/></svg>
+</body>
+	<script src="script.js"></script>
+	<script src="moment.js"></script>
+</html>
