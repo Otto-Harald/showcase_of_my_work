@@ -1,0 +1,199 @@
+// Author: Otto-Harald Hirvonen
+// Email: ottoharald.hirvonen@gmail.com
+// Phone number: 040 41 32 757
+// Description:
+//              This is a networking project I made for a programming course
+//              This program stores network data and gives the network as a tree chart.
+//              The premise of the problem is, that a program that stores details of a 
+//              recruited member and the name of the person who recruited that member.
+//              This program can store two pairs of names with command "s" and print 
+//              a tree chart of stored network with command "p." There are two additional
+//              commands. "C" when given id as parameter prints this person's size of subnetwork
+//              i.e how many has this person recruited. Command "d" gives the longest chain of
+//              recruitment.
+
+
+
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
+#include<stdio.h>
+
+
+const std::string HELP_TEXT = "S = store id1 i2\nP = print id\n"
+                              "C = count id\nD = depth id\n";
+
+
+std::vector<std::string> split(const std::string& s, const char delimiter, bool ignore_empty = false){
+    std::vector<std::string> result;
+    std::string tmp = s;
+
+    while(tmp.find(delimiter) != std::string::npos)
+    {
+        std::string new_part = tmp.substr(0, tmp.find(delimiter));
+        tmp = tmp.substr(tmp.find(delimiter)+1, tmp.size());
+        if(not (ignore_empty and new_part.empty()))
+        {
+            result.push_back(new_part);
+        }
+    }
+    if(not (ignore_empty and tmp.empty()))
+    {
+        result.push_back(tmp);
+    }
+    return result;
+}
+
+int depth(std::string name, int counter){
+
+    std::string file_name = "database";
+    std::ifstream file_object(file_name);
+    if(not file_object){std::cout<<"FAIL";return 0;}
+
+    std::string line;
+    char dot = '.';
+
+    while(getline(file_object, line)){
+        if(line == ""){return 0;}
+        std::vector<std::string> parts = split(line,dot);
+        std::string recruiter = parts.at(0);
+        std::string recruited = parts.at(1);
+
+        if (recruiter == name){
+            int counter_contender = depth(recruited, counter) +1;
+            if (counter_contender > counter){
+                return counter_contender;
+            }
+        }
+}
+
+    file_object.close();
+    return counter;
+}
+
+
+int count(std::string name, int counter){
+
+    std::string file_name = "database";
+    std::ifstream file_object(file_name);
+    if(not file_object){std::cout<<"FAIL";return 0;}
+
+    std::string line;
+    char dot = '.';
+
+    while(getline(file_object, line)){
+        if(line == ""){return 0;}
+        std::vector<std::string> parts = split(line,dot);
+        std::string recruiter = parts.at(0);
+        std::string recruited = parts.at(1);
+
+        if (recruiter == name){
+            counter = count(recruited, counter) +1;
+        }
+}
+
+    file_object.close();
+    return counter;
+}
+
+void print(std::string name, int counter){
+    std::string file_name = "database";
+    std::ifstream file_object(file_name);
+    if(not file_object){std::cout<<"FAIL";return;}
+
+    std::string line;
+    char dot = '.';
+    std::string double_dot = "..";
+    int counter_ref = counter;
+
+    while(getline(file_object, line)){
+        if(line == ""){return;}
+        std::vector<std::string> parts = split(line,dot);
+        std::string recruiter = parts.at(0);
+        std::string recruited = parts.at(1);
+
+        if (recruiter == name){
+            while(counter_ref>=1){std::cout<<double_dot;counter_ref--;}
+            counter_ref = counter;
+            std::cout<<recruited<<std::endl;
+            print(recruited, counter+1);
+        }
+}
+       file_object.close();
+       return;}
+
+
+int main()
+{
+    std::string file_name = "database";
+    std::ifstream file_object(file_name);
+    if(not file_object){std::cout<<"FAIL";return 1;}
+
+
+    while(true){
+        std::string line;
+        std::cout << "> ";
+        getline(std::cin, line);
+        std::vector<std::string> parts = split(line, ' ', true);
+
+        std::string command = parts.at(0);
+
+        if(command == "S" or command == "s"){
+            if(parts.size() != 3){
+                std::cout << "Erroneous parameters!" << std::endl << HELP_TEXT;
+                continue;
+            }
+            std::string id1 = parts.at(1);
+            std::string id2 = parts.at(2);
+
+            char dot = '.';
+            std::string endl = "\n";
+            std::string new_line = id1 + dot + id2 + endl;
+            std::ofstream file_object_output(file_name, std::ios_base::out | std::ios_base::app);
+            file_object_output << new_line;
+            file_object_output.close();
+
+        } else if(command == "P" or command == "p"){
+            if(parts.size() != 2){
+                std::cout << "Erroneous parameters!" << std::endl << HELP_TEXT;
+                continue;
+            }
+            std::string id = parts.at(1);
+
+            std::cout<<id<<std::endl;
+            print(id,1);
+
+        } else if(command == "C" or command == "c"){
+            if(parts.size() != 2){
+                std::cout << "Erroneous parameters!" << std::endl << HELP_TEXT;
+                continue;
+            }
+            std::string id = parts.at(1);
+
+
+            int count_number = count(id,0);
+            std::cout<<count_number<<std::endl;
+
+        } else if(command == "D" or command == "d"){
+            if(parts.size() != 2){
+                std::cout << "Erroneous parameters!" << std::endl << HELP_TEXT;
+                continue;
+            }
+            std::string id = parts.at(1);
+
+            int counter = depth(id,1);
+            std::cout<<counter<<std::endl;
+
+        } else if(command == "Q" or command == "q"){
+           remove("database");
+           std::string file_name = "database";
+           std::ifstream file_object(file_name);
+           file_object.close();
+           return EXIT_SUCCESS;
+        } else {
+            std::cout << "Erroneous command!" << std::endl << HELP_TEXT;
+        }
+    }
+    file_object.close();
+}
