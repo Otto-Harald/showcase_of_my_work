@@ -1,0 +1,108 @@
+:root {
+  --proportional: 1.1;
+  --pseudo_color: #555346;
+  --pseudo_color_off: black;
+  --pseudo_color_off_opacity: 0.65;
+  --pseudo_color_off_opacity_2: 0.0;
+ }
+
+ html, body{
+ position: relative;
+ width:100%;
+ height:100%;
+ overflow: hidden;
+ }
+.hex_main{
+float: left;
+width: calc(var(--proportional) * 60px);
+height: calc(var(--proportional) * 104px);
+position: absolute;
+left: 960px;
+right: 45%;
+top: 450px;
+}
+
+.hex_left{
+float: left;
+border-right: calc(var(--proportional) * 30px) solid var(--pseudo_color);
+border-top: calc(var(--proportional) * 52px ) solid transparent;
+border-bottom: calc(var(--proportional) * 52px) solid transparent;
+position: absolute;
+left: calc(var(--proportional) * -30px);
+}
+.hex_right{
+float: left;
+border-left: calc(var(--proportional) * 30px) solid var(--pseudo_color);
+border-top: calc(var(--proportional) * 52px) solid transparent;
+border-bottom: calc(var(--proportional) * 52px) solid transparent;
+position: absolute;
+left: calc(var(--proportional) * 60px);
+}
+
+.hex_main_off{
+width: calc(var(--proportional) * 60px);
+height: calc(var(--proportional) * 104px);
+background-color: var(--pseudo_color_off);
+opacity: var(--pseudo_color_off_opacity);
+position: relative;
+display: none;
+}
+
+.hex_left_off{
+float: left;
+border-right: calc(var(--proportional) * 30px) solid var(--pseudo_color_off);
+border-top: calc(var(--proportional) * 52px ) solid transparent;
+border-bottom: calc(var(--proportional) * 52px) solid transparent;
+position: relative;
+left: calc(var(--proportional) * -30px);
+display: none;
+}
+.hex_right_off{
+float: left;
+border-left: calc(var(--proportional) * 30px) solid var(--pseudo_color_off);
+border-top: calc(var(--proportional) * 52px) solid transparent;
+border-bottom: calc(var(--proportional) * 52px) solid transparent;
+position: relative;
+left: calc(var(--proportional) * 30px);
+display: none;
+}
+
+.hex_main_invisible{
+height: 115px;
+width: 115px;
+border-radius: 50%;
+background-color: var(--pseudo_color_off);
+opacity: var(--pseudo_color_off_opacity_2);
+position: relative;
+display: block;
+top: -120px;
+left: -25px;
+z-index: 5;
+}
+
+#grid_space{
+    position: absolute;
+    width: 65%;
+    height: 100%;
+    overflow: hidden;
+}
+
+#timer_space{
+    position: absolute;
+    width: 45%;
+    height: 100%;
+    left: 65%;
+    background: #b0b0b0;
+    overflow: hidden;
+}
+
+#grid{
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    top: 100px;
+    left: 100px;
+}
+
+
+
