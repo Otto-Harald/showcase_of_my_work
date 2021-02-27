@@ -1,0 +1,45 @@
+# Title: K means cluster
+# Author: Otto-Harald Hirvonen
+# email: ottoharald.hirvonen@gmail.com
+# phone number: 040 41 32 757
+# description:
+#               This is a practice model of k means cluster algorithm. I used
+#               pre built datasets. Some credit goes to an youtube channel
+#               called tech with tim, who's recommendations and tutorials I
+#               used.
+
+
+import numpy as np
+import sklearn
+from sklearn.preprocessing import scale
+from sklearn.datasets import load_digits
+from sklearn.cluster import KMeans
+from sklearn import metrics
+
+digits = load_digits() # digits is a preset dataset
+data = scale(digits.data) # Standardize a dataset along any axis
+
+y = digits.target
+
+# k = 10
+k = len(np.unique(y))
+print(k)
+samples, features = data.shape
+
+def bench_k_means(estimator, name, data):
+    estimator.fit(data)
+    print('%-9s\t%.2fs\t%i\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f'
+          % (name, estimator.inertia_,
+             metrics.homogeneity_score(y, estimator.labels_),
+             metrics.completeness_score(y, estimator.labels_),
+             metrics.v_measure_score(y, estimator.labels_),
+             metrics.adjusted_rand_score(y, estimator.labels_),
+             metrics.adjusted_mutual_info_score(y,  estimator.labels_),
+             metrics.silhouette_score(data, estimator.labels_,
+                                      metric='euclidean')))
+
+
+clf = KMeans(n_clusters=k, init="random", n_init=10, max_iter=300) # K-Means clustering.
+bench_k_means(clf, "1", data)
+
+
