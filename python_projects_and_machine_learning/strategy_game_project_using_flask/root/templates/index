@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width,user-scalable=no, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>GUERILLA Version 2.0.1</title>
+</head>
+<body>
+<div id="grid_space"  onscroll="scroll_zoom()">
+    <div id="grid"></div>
+</div>
+
+<div id="timer_space">
+<button id="demo_button">TEST</button>
+</div>
+<script>var location_vectors = JSON.parse({{ player_starting_vectors | tojson }}); var all_piece_types = JSON.parse({{all_piece_types | tojson}}); var grid_radius = JSON.parse({{grid_radius|tojson}}); var grid_coordinates = JSON.parse({{GRID_COORDINATES|tojson}})</script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
