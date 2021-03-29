@@ -1,5 +1,5 @@
 import React from 'react';
-import header from "./components/Header.js";
+import Header from "./components/header.js";
 import SpacingGrid from "./components/grid.js";
 import { makeStyles } from '@material-ui/core/styles';
 import ReservationCard from "./components/reservationCard.js";
